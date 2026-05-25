@@ -463,15 +463,14 @@ export async function chatWithAssistant(
 
   try {
     const supabase = await createClient()
-    const { data: openai } = await import('@/lib/openai/client')
 
     const systemPrompt = SYSTEM_PROMPTS.pedagogicalAssistant +
       (classContext
         ? `\n\nContexto atual do professor:\n- Série: ${classContext.grade}\n- Disciplina: ${classContext.subject}\n- Número de alunos: ${classContext.studentCount}`
         : '')
 
-    const openaiClient = (await import('@/lib/openai/client')).openai
-    const response = await openaiClient.chat.completions.create({
+    const { getOpenAI } = await import('@/lib/openai/client')
+    const response = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: systemPrompt },

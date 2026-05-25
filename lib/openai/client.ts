@@ -1,17 +1,21 @@
 import OpenAI from 'openai'
 
-export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-
 export const AI_MODEL = 'gpt-4o-mini'
+
+function getOpenAIClient(): OpenAI {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error('OPENAI_API_KEY is not set')
+  }
+  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+}
 
 export async function generateWithAI(
   systemPrompt: string,
   userPrompt: string,
   maxTokens: number = 2000
 ): Promise<{ content: string; tokensUsed: number }> {
-  const response = await openai.chat.completions.create({
+  const client = getOpenAIClient()
+  const response = await client.chat.completions.create({
     model: AI_MODEL,
     messages: [
       { role: 'system', content: systemPrompt },
@@ -25,6 +29,10 @@ export async function generateWithAI(
   const tokensUsed = response.usage?.total_tokens || 0
 
   return { content, tokensUsed }
+}
+
+export function getOpenAI(): OpenAI {
+  return getOpenAIClient()
 }
 
 export const SYSTEM_PROMPTS = {

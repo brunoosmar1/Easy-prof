@@ -112,7 +112,13 @@ export function ReportGenerator({ classes }: { classes: Class[] }) {
       class_id: selectedClassId,
       bimester: parseInt(bimester),
       academic_year: new Date().getFullYear().toString(),
-      ...report,
+      academic_performance: report.academic_performance ?? '',
+      participation: report.participation ?? '',
+      behavior: report.behavior ?? '',
+      difficulties: report.difficulties ?? '',
+      strengths: report.strengths ?? '',
+      recommendations: report.recommendations ?? '',
+      interventions: report.interventions ?? '',
     })
 
     setSaving(false)

@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -24,7 +25,10 @@ import { signOut } from '@/lib/actions/auth'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
-const navigation = [
+type NavItem = { name: string; href: string; icon: React.FC<{ className?: string }>; ai?: boolean }
+type NavGroup = { label: string; items: NavItem[] }
+
+const navigation: NavGroup[] = [
   {
     label: 'Principal',
     items: [

@@ -95,7 +95,7 @@ export function LessonPlanList({ plans }: { plans: LessonPlan[] }) {
           </DialogHeader>
           {selected?.generated_content && (
             <div className="space-y-4 text-sm">
-              {Object.entries(selected.generated_content as Record<string, string>).map(
+              {Object.entries(selected.generated_content as unknown as Record<string, string>).map(
                 ([key, value]) => (
                   <div key={key}>
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-1 capitalize">
